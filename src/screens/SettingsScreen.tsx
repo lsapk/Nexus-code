@@ -4,17 +4,12 @@ import { GlassCard } from '../components/GlassCard';
 import { Icon } from '../components/Icon';
 import { useNexusStore } from '../store/useNexusStore';
 import { t } from '../constants/i18n';
-import { MotiView } from 'moti';
 
 export default function SettingsScreen({ onClose }: { onClose: () => void }) {
   const { language, setLanguage, reset } = useNexusStore();
 
   return (
-    <MotiView
-      from={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="flex-1 bg-black/90 p-6 pt-20"
-    >
+    <View className="flex-1 bg-black/90 p-6 pt-20">
       <View className="flex-row justify-between items-center mb-10">
         <Text className="text-white text-3xl font-bold">{t('settings', language)}</Text>
         <TouchableOpacity onPress={onClose} className="p-2 bg-zinc-800 rounded-full">
@@ -54,6 +49,6 @@ export default function SettingsScreen({ onClose }: { onClose: () => void }) {
           </View>
         </TouchableOpacity>
       </ScrollView>
-    </MotiView>
+    </View>
   );
 }
