@@ -11,5 +11,6 @@ yarn-error.log*
 .env.production.local
 web-build/
 
+
 # Generated Expo assets
 assets/*.png

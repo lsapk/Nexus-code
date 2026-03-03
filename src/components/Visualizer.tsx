@@ -6,7 +6,6 @@ import { Avatar } from './Avatar';
 import { Icon } from './Icon';
 import { Badge } from './Badge';
 import { styled } from '../lib/styled';
-import { MotiView } from 'moti';
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -42,14 +41,8 @@ export const Visualizer = ({ node }: { node: any }) => {
     : children;
 
   return (
-    <MotiView
-      from={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ type: 'timing', duration: 400 }}
-    >
-      <Component {...props}>
-        {renderedChildren}
-      </Component>
-    </MotiView>
+    <Component {...props}>
+      {renderedChildren}
+    </Component>
   );
 };
