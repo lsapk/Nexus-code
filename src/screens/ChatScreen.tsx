@@ -5,7 +5,6 @@ import { Icon } from '../components/Icon';
 import { GlassCard } from '../components/GlassCard';
 import { useNexusStore } from '../store/useNexusStore';
 import { generateBlueprint } from '../services/gemini';
-import { MotiView, AnimatePresence } from 'moti';
 import { t } from '../constants/i18n';
 import SettingsScreen from './SettingsScreen';
 import { exportProject } from '../services/export';
@@ -51,19 +50,14 @@ export default function ChatScreen() {
         ) : (
           <View className="flex-1 items-center justify-center p-10">
             <Icon name="Sparkles" size={64} color="#007AFF" />
-            <MotiView
-              from={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 200 }}
-              className="items-center"
-            >
+            <View className="items-center">
               <Text className="text-white text-3xl font-bold text-center mt-6">
                 {t('welcome', language)}
               </Text>
               <Text className="text-zinc-500 text-center mt-2">
                 {t('tagline', language)}
               </Text>
-            </MotiView>
+            </View>
           </View>
         )}
       </View>
@@ -93,13 +87,11 @@ export default function ChatScreen() {
       </View>
 
       {/* Settings Overlay */}
-      <AnimatePresence>
-        {showSettings && (
-          <View className="absolute inset-0 z-50">
-            <SettingsScreen onClose={() => setShowSettings(false)} />
-          </View>
-        )}
-      </AnimatePresence>
+      {showSettings && (
+        <View className="absolute inset-0 z-50">
+          <SettingsScreen onClose={() => setShowSettings(false)} />
+        </View>
+      )}
 
       {/* Chat Input */}
       <KeyboardAvoidingView
