@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { View, KeyboardAvoidingView, Platform, TextInput, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Visualizer } from '../components/Visualizer';
 import { Icon } from '../components/Icon';
 import { GlassCard } from '../components/GlassCard';
