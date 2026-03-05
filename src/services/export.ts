@@ -66,7 +66,7 @@ function generateAppCode(blueprint: any) {
 import React from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context/lib/commonjs';
 import "./global.css";
 
 // Mock Components for Generated App
