@@ -7,12 +7,12 @@ export function styled<T extends React.ComponentType<any>>(
 ) {
   cssInterop(Component, {
     className: {
-      target: "style",
+      target: "style" as any,
       nativeStyleToProp: {
         backgroundColor: "backgroundColor",
         color: "color",
         borderColor: "borderColor",
-      },
+      } as any,
     },
   });
 

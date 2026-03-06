@@ -5,6 +5,8 @@ import { BlurButton } from './BlurButton';
 import { Avatar } from './Avatar';
 import { Icon } from './Icon';
 import { Badge } from './Badge';
+import { SmoothStack } from './SmoothStack';
+import { ListItem } from './ListItem';
 import { styled } from '../lib/styled';
 
 const StyledView = styled(View);
@@ -21,6 +23,8 @@ const COMPONENTS: Record<string, any> = {
   Avatar,
   Icon,
   Badge,
+  SmoothStack,
+  ListItem,
   Input: StyledTextInput,
 };
 

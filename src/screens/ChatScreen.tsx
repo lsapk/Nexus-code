@@ -8,6 +8,13 @@ import { generateBlueprint } from '../services/gemini';
 import { t } from '../constants/i18n';
 import SettingsScreen from './SettingsScreen';
 import { exportProject } from '../services/export';
+import { styled } from '../lib/styled';
+
+const StyledView = styled(View);
+const StyledText = styled(Text);
+const StyledKeyboardAvoidingView = styled(KeyboardAvoidingView);
+const StyledTextInput = styled(TextInput);
+const StyledTouchableOpacity = styled(TouchableOpacity);
 
 export default function ChatScreen() {
   const [input, setInput] = useState('');
@@ -24,7 +31,6 @@ export default function ChatScreen() {
     setLoading(true);
 
     try {
-      // Build history for Gemini
       const history = blueprints.map(b => ({
         role: "model",
         parts: [{ text: JSON.stringify(b) }]
@@ -42,84 +48,100 @@ export default function ChatScreen() {
   };
 
   return (
-    <View className="flex-1 bg-black">
-      {/* Preview Area */}
-      <View className="flex-1">
+    <StyledView className="flex-1 bg-black">
+      {/* Visualizer Area */}
+      <StyledView className="flex-1">
         {currentBlueprint ? (
           <Visualizer node={currentBlueprint.root} />
         ) : (
-          <View className="flex-1 items-center justify-center p-10">
-            <Icon name="Sparkles" size={64} color="#007AFF" />
-            <View className="items-center">
-              <Text className="text-white text-3xl font-bold text-center mt-6">
-                {t('welcome', language)}
-              </Text>
-              <Text className="text-zinc-500 text-center mt-2">
-                {t('tagline', language)}
-              </Text>
-            </View>
-          </View>
+          <StyledView className="flex-1 items-center justify-center p-8">
+            <StyledView className="p-4 border border-cyan-500/30 rounded-full bg-cyan-500/10 mb-8">
+              <Icon name="Terminal" size={48} color="#06b6d4" />
+            </StyledView>
+            <StyledView className="items-center">
+              <StyledText className="text-cyan-400 text-3xl font-bold tracking-tight text-center">
+                {t('welcome', language).toUpperCase()}
+              </StyledText>
+              <StyledText className="text-zinc-500 font-mono text-center mt-4">
+                {"> "} {t('tagline', language)}
+              </StyledText>
+              <StyledView className="flex-row items-center mt-2">
+                <StyledView className="w-2 h-4 bg-cyan-500" />
+              </StyledView>
+            </StyledView>
+          </StyledView>
         )}
-      </View>
+      </StyledView>
 
-      {/* Controls */}
-      <View className="absolute top-12 left-6 right-6 flex-row justify-between items-center z-10">
-        <View className="flex-row gap-2">
-          <TouchableOpacity onPress={undo} className="p-2 bg-black/50 rounded-full border border-white/10">
-            <Icon name="Undo2" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={redo} className="p-2 bg-black/50 rounded-full border border-white/10">
-            <Icon name="Redo2" size={20} />
-          </TouchableOpacity>
-        </View>
-
-        <View className="flex-row gap-2">
-          <TouchableOpacity onPress={() => setShowSettings(true)} className="p-2 bg-black/50 rounded-full border border-white/10">
-            <Icon name="Settings" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => currentBlueprint && exportProject(currentBlueprint)}
-            className="px-4 py-2 bg-primary rounded-full"
+      {/* Floating Controls */}
+      <StyledView className="absolute top-4 left-6 right-6 flex-row justify-between items-center z-10">
+        <StyledView className="flex-row gap-2">
+          <StyledTouchableOpacity
+            onPress={undo}
+            className="p-3 bg-zinc-900/80 rounded-full border border-zinc-800"
           >
-            <Icon name="Download" size={20} />
-          </TouchableOpacity>
-        </View>
-      </View>
+            <Icon name="Undo2" size={18} color="#06b6d4" />
+          </StyledTouchableOpacity>
+          <StyledTouchableOpacity
+            onPress={redo}
+            className="p-3 bg-zinc-900/80 rounded-full border border-zinc-800"
+          >
+            <Icon name="Redo2" size={18} color="#06b6d4" />
+          </StyledTouchableOpacity>
+        </StyledView>
+
+        <StyledView className="flex-row gap-2">
+          <StyledTouchableOpacity
+            onPress={() => setShowSettings(true)}
+            className="p-3 bg-zinc-900/80 rounded-full border border-zinc-800"
+          >
+            <Icon name="Cpu" size={18} color="#06b6d4" />
+          </StyledTouchableOpacity>
+          <StyledTouchableOpacity
+            onPress={() => currentBlueprint && exportProject(currentBlueprint)}
+            className="px-5 py-3 bg-cyan-600 rounded-full flex-row items-center"
+          >
+            <Icon name="Share2" size={18} color="white" />
+          </StyledTouchableOpacity>
+        </StyledView>
+      </StyledView>
 
       {/* Settings Overlay */}
       {showSettings && (
-        <View className="absolute inset-0 z-50">
+        <StyledView className="absolute inset-0 z-50">
           <SettingsScreen onClose={() => setShowSettings(false)} />
-        </View>
+        </StyledView>
       )}
 
-      {/* Chat Input */}
-      <KeyboardAvoidingView
+      {/* Chat Terminal Input */}
+      <StyledKeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="absolute bottom-0 left-0 right-0 p-6"
+        className="p-6 pb-10"
       >
-        <GlassCard intensity={40} className="flex-row items-center p-2 pr-4">
-          <TextInput
-            className="flex-1 text-white px-4 py-2"
+        <GlassCard intensity={15} className="flex-row items-center p-2 border border-zinc-800">
+          <StyledView className="pl-4 pr-2">
+            <StyledText className="text-cyan-500 font-mono font-bold">$</StyledText>
+          </StyledView>
+          <StyledTextInput
+            className="flex-1 text-white px-2 py-3 font-mono"
             placeholder={t('start_chat', language)}
-            placeholderTextColor="#888"
+            placeholderTextColor="#4b5563"
             value={input}
             onChangeText={setInput}
-            multiline
           />
-          <TouchableOpacity
+          <StyledTouchableOpacity
             onPress={handleSend}
             disabled={loading}
-            className={`p-2 rounded-xl ${loading ? 'bg-zinc-800' : 'bg-white'}`}
+            className={`p-3 rounded-xl ${loading ? 'opacity-50' : ''}`}
           >
             {loading ? (
-              <ActivityIndicator size="small" color="#007AFF" />
+              <ActivityIndicator size="small" color="#06b6d4" />
             ) : (
-              <Icon name="ArrowUp" size={20} color="black" />
+              <Icon name="ArrowRight" size={20} color="#06b6d4" />
             )}
-          </TouchableOpacity>
+          </StyledTouchableOpacity>
         </GlassCard>
-      </KeyboardAvoidingView>
-    </View>
+      </StyledKeyboardAvoidingView>
+    </StyledView>
   );
 }
